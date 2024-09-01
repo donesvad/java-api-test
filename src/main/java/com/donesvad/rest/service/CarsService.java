@@ -25,7 +25,7 @@ public class CarsService {
   @Value("${cars-service-rest.host}")
   private String host;
 
-  @Value("${cars-service-rest.port}")
+  @Value("${cars-service-rest.port:#{null}}")
   private Integer port;
 
   @Value("${cars-service-rest.protocol}")

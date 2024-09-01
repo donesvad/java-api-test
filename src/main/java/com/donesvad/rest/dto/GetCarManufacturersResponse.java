@@ -23,5 +23,5 @@ public class GetCarManufacturersResponse {
   private final String searchCriteria;
 
   @JsonProperty("Results")
-  private final List<Make> results;
+  private final List<Manufacturer> results;
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigInteger;
 import java.util.List;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -12,6 +13,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @Getter
 @ToString
+@Builder
 public class Manufacturer {
 
   @JsonProperty("Country")
