@@ -9,8 +9,27 @@ import com.donesvad.rest.dto.Make;
 import com.donesvad.rest.dto.Manufacturer;
 import java.math.BigInteger;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 
 public class CarsTest extends BaseTest {
+
+  @Value("${car.make.id}")
+  private BigInteger makeId;
+
+  @Value("${car.make.name}")
+  private String makeName;
+
+  @Value("${car.manufacturer.id}")
+  private BigInteger manufacturerId;
+
+  @Value("${car.manufacturer.name}")
+  private String manufacturerName;
+
+  @Value("${car.manufacturer.common-name}")
+  private String manufacturerCommonName;
+
+  @Value("${car.manufacturer.country}")
+  private String manufacturerCountry;
 
   @Test
   void getMakesOfCarsResponseTest() {
@@ -20,7 +39,7 @@ public class CarsTest extends BaseTest {
 
   @Test
   void getSpecificMakeOfCarsTest() {
-    Make expectedMake = new Make(BigInteger.valueOf(10005), "357 GOLF CARTS");
+    Make expectedMake = new Make(makeId, makeName);
     GetMakesOfCarsResponse makesOfCarsResponse = carsAction.getMakesOfCarsResponse();
     Make actualMake = getMake(makesOfCarsResponse, expectedMake.getMakeId());
     carsAction.assertMakeOfCars(actualMake, expectedMake);
@@ -36,10 +55,10 @@ public class CarsTest extends BaseTest {
   void getSpecificCarManufacturerTest() {
     Manufacturer expectedManufacturer =
         Manufacturer.builder()
-            .manufacturerCommonName("Tesla")
-            .manufacturerId(BigInteger.valueOf(955))
-            .country("UNITED STATES (USA)")
-            .manufacturerName("TESLA, INC.")
+            .manufacturerCommonName(manufacturerCommonName)
+            .manufacturerId(manufacturerId)
+            .country(manufacturerCountry)
+            .manufacturerName(manufacturerName)
             .build();
     GetCarManufacturersResponse carManufacturersResponse = carsAction.getCarManufacturersResponse();
     Manufacturer actualManufacturer =

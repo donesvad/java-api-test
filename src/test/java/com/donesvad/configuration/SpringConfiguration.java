@@ -20,7 +20,10 @@ import org.springframework.test.context.ContextConfiguration;
 @Configuration
 @ComponentScan(basePackages = {"com.donesvad"})
 @PropertySource(
-    value = {"classpath:application-${environment:dev}.yml"},
+    value = {
+      "classpath:application-${environment:dev}.yml",
+      "classpath:test-data-${environment:dev}.yml"
+    },
     factory = YamlPropertySourceFactory.class)
 @ContextConfiguration
 public class SpringConfiguration {
