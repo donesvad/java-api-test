@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.donesvad</groupId>
@@ -26,7 +26,21 @@
     <jwt-java.version>4.4.0</jwt-java.version>
     <logging.version>2.23.1</logging.version>
     <protobuf-util.version>4.27.3</protobuf-util.version>
+    <allure.version>2.29.0</allure.version>
+    <aspectj.version>1.9.21</aspectj.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-bom</artifactId>
+        <version>${allure.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <!--Spring-->
@@ -107,6 +121,17 @@
       <artifactId>protobuf-java-util</artifactId>
       <version>${protobuf-util.version}</version>
     </dependency>
+
+    <!--Report-->
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-rest-assured</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -121,17 +146,34 @@
     <sourceDirectory>src/main/java</sourceDirectory>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.3</version>
+        <configuration>
+          <argLine>
+            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+          </argLine>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
         <groupId>org.xolstice.maven.plugins</groupId>
         <artifactId>protobuf-maven-plugin</artifactId>
         <version>0.6.1</version>
         <configuration>
           <protocArtifact>
-<!--   If mac m2, use this:         com.google.protobuf:protoc:3.3.0:exe:osx-x86_64 -->
+            <!--   If mac m2, use this:         com.google.protobuf:protoc:3.3.0:exe:osx-x86_64 -->
             com.google.protobuf:protoc:3.3.0:exe:${os.detected.classifier}
           </protocArtifact>
           <pluginId>grpc-java</pluginId>
           <pluginArtifact>
-<!--   If mac m2, use this:         io.grpc:protoc-gen-grpc-java:1.4.0:exe:osx-x86_64-->
+            <!--   If mac m2, use this:         io.grpc:protoc-gen-grpc-java:1.4.0:exe:osx-x86_64-->
             io.grpc:protoc-gen-grpc-java:1.4.0:exe:${os.detected.classifier}
           </pluginArtifact>
         </configuration>

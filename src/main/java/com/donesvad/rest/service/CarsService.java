@@ -5,6 +5,7 @@ import static io.restassured.RestAssured.given;
 
 import com.donesvad.rest.dto.GetCarManufacturersResponse;
 import com.donesvad.rest.dto.GetMakesOfCarsResponse;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.specification.RequestSpecification;
@@ -50,6 +51,7 @@ public class CarsService {
             .log(LogDetail.METHOD)
             .log(LogDetail.BODY)
             .addHeaders(headers)
+            .addFilter(new AllureRestAssured())
             .build();
   }
 
