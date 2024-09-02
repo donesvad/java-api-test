@@ -29,7 +29,7 @@ This project is an end-to-end (E2E) test framework for API testing using Java. T
 To build the project and run all tests, use the following Maven commands:
 
 ```bash
-mvn clean install
+mvn clean install -DskipTests
 mvn test
 ```
 
