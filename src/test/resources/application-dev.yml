@@ -1,4 +1,0 @@
-cars-service-rest:
-  host: vpic.nhtsa.dot.gov
-  protocol: https
-  context-path: /api/vehicles
