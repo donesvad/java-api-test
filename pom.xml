@@ -97,18 +97,6 @@
       <version>${jwt-java.version}</version>
     </dependency>
 
-    <!--Logging-->
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>${logging.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>${logging.version}</version>
-    </dependency>
-
     <!--Code generation-->
     <dependency>
       <groupId>org.projectlombok</groupId>

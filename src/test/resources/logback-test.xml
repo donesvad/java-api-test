@@ -1,0 +1,42 @@
+<configuration>
+
+  <!-- Define the location of the logs directory for test output -->
+  <property name="LOGS" value="logs"/>
+
+  <!-- Console Appender for Tests -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- Rolling File Appender for Tests -->
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- Log file location for tests -->
+    <file>${LOGS}/test-output.log</file>
+
+    <!-- Rolling policy for test logs -->
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- Rotate every day -->
+      <fileNamePattern>${LOGS}/test-output-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+      <!-- Maximum number of archive files to keep -->
+      <maxHistory>7</maxHistory>
+      <!-- Trigger rolling based on file size as well -->
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <!-- Log rotation based on size -->
+        <maxFileSize>10MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- Root logger configuration for tests -->
+  <root level="info">
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="FILE"/>
+  </root>
+
+</configuration>

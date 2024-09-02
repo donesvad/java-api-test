@@ -8,9 +8,11 @@ import com.donesvad.rest.dto.GetMakesOfCarsResponse;
 import com.donesvad.rest.dto.Make;
 import com.donesvad.rest.dto.Manufacturer;
 import java.math.BigInteger;
+import lombok.extern.apachecommons.CommonsLog;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 
+@CommonsLog
 public class CarsTest extends BaseTest {
 
   @Value("${car.make.id}")

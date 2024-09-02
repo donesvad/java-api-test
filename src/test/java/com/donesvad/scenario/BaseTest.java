@@ -4,14 +4,14 @@ import com.donesvad.action.CarsAction;
 import com.donesvad.configuration.SpringConfiguration;
 import com.donesvad.util.TestContext;
 import io.restassured.RestAssured;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.apachecommons.CommonsLog;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@Slf4j
+@CommonsLog
 @SpringBootTest(classes = SpringConfiguration.class)
 public abstract class BaseTest {
 
@@ -21,6 +21,7 @@ public abstract class BaseTest {
   @BeforeAll
   public static void setup() {
     RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+    // RestAssured.filters( new ResponseLoggingFilter()); // log response
   }
 
   @BeforeEach
