@@ -13,7 +13,9 @@ import com.donesvad.rest.dto.GetCarManufacturersResponse;
 import com.donesvad.rest.dto.GetMakesOfCarsResponse;
 import com.donesvad.rest.dto.Make;
 import com.donesvad.rest.dto.Manufacturer;
+import com.donesvad.rest.enums.ResponseFormat;
 import com.donesvad.rest.service.CarsService;
+import io.restassured.response.Response;
 import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,12 +40,28 @@ public class CarsAction {
         .orElseThrow(() -> new AssertionError("Manufacturer not found"));
   }
 
-  public GetMakesOfCarsResponse getMakesOfCarsResponse() {
-    return carsService.getMakesOfCars();
+  public GetMakesOfCarsResponse getMakesOfCars() {
+    return carsService.getMakesOfCars(ResponseFormat.JSON);
   }
 
-  public GetCarManufacturersResponse getCarManufacturersResponse() {
-    return carsService.getCarManufacturers();
+  public Response getMakesOfCarsResponse(ResponseFormat format) {
+    return carsService.getMakesOfCarsResponse(format);
+  }
+
+  public GetMakesOfCarsResponse getMakesOfCars(ResponseFormat format) {
+    return carsService.getMakesOfCars(format);
+  }
+
+  public GetCarManufacturersResponse getCarManufacturers() {
+    return carsService.getCarManufacturers(ResponseFormat.JSON);
+  }
+
+  public Response getCarManufacturersResponse(ResponseFormat format) {
+    return carsService.getCarManufacturersResponse(format);
+  }
+
+  public GetCarManufacturersResponse getCarManufacturers(ResponseFormat format) {
+    return carsService.getCarManufacturers(format);
   }
 
   public void assertMakesOfCars(GetMakesOfCarsResponse makesOfCarsResponse) {

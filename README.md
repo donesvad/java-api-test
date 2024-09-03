@@ -11,10 +11,12 @@ This project is an end-to-end (E2E) test framework for API testing using Java. T
 - **REST Assured**: Facilitates easy and powerful REST API testing.
 - **gRPC Support**: Supports gRPC services testing with the `grpc-spring-boot-starter`.
 - **JWT Handling**: Enables JWT token generation and validation for secured endpoints.
-- **Log4j for Logging**: Provides extensive logging capabilities using Log4j.
+- **Logback for Logging**: Leverages Spring's default Logback for flexible and performant logging capabilities.
 - **Lombok**: Simplifies Java code by reducing boilerplate.
 - **Protobuf Support**: Enables Protocol Buffers (protobuf) serialization for gRPC testing.
 - **Allure Reporting**: Integrates with Allure for generating detailed test reports.
+- **GitHub Actions for CI**: Implements Continuous Integration (CI) using GitHub Actions to automatically build, test, and publish test reports. The CI workflow triggers on push, pull request, or manually, ensuring that the code is always in a deployable state.
+- **WireMock for Mocking**: Utilizes WireMock for mocking external HTTP dependencies, allowing for isolated and repeatable tests by simulating the behavior of an external API without relying on its availability.
 
 ## Getting Started
 
@@ -84,13 +86,24 @@ This project uses GitHub Actions for Continuous Integration (CI) to automaticall
     - The CI pipeline runs on the ubuntu-latest virtual machine.
     - It checks out the code from the repository and sets up JDK 17 using the `actions/setup-java@v4` action.
 3. Building the Project:
-    - The project is built using Maven with the command mvn clean install. This command also runs the E2E API tests.
-4. Generating and Publishing the Allure Test Report:
+    - The project is first built using Maven with the command mvn clean install -DskipTests. This command compiles the project and skips the tests to quickly validate the build.
+4. Running the Tests:
+    - After the build, the E2E API tests are executed using the mvn test command. This step ensures that all tests are run and their results are generated.
+5. Generating and Publishing the Allure Test Report:
     - The CI pipeline loads the test report history from the gh-pages branch.
     - The Allure report is generated using the `simple-elf/allure-report-action@v1.9` action.
     - The generated report is then published to the gh-pages branch using the `peaceiris/actions-gh-pages@v3` action.
-5. Accessing the Allure Report:
+6. Accessing the Allure Report:
     - After the workflow runs, you can view the Allure report. The Allure report is hosted on GitHub Pages and can be accessed using the following link: [View Allure Report Results](https://donesvad.github.io/java-api-test/)
 
 This CI pipeline ensures that all changes to the main branch are thoroughly tested and that test results are easily accessible through the Allure report.
 
+### WireMock
+WireMock is integrated into the project to mock external API dependencies, enabling more controlled and predictable testing environments. This is particularly useful for scenarios where the external service is unreliable, expensive to use, or simply unavailable during testing.
+
+WireMock allows you to:
+- Define stubs for external service endpoints, returning pre-defined responses for various HTTP methods.
+- Simulate different response statuses and delays to test how your application handles various scenarios.
+- Ensure that your tests are fast, reliable, and do not depend on external network conditions.
+
+To define WireMock stubs, create JSON files in the `src/test/resources/mappings` directory. Each JSON file represents a stub configuration for a specific endpoint. You can define the request method, URL path, response status, headers, and body in the stub configuration.

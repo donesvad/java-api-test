@@ -28,6 +28,7 @@
     <protobuf-util.version>4.27.3</protobuf-util.version>
     <allure.version>2.29.0</allure.version>
     <aspectj.version>1.9.21</aspectj.version>
+    <wiremock.version>3.9.1</wiremock.version>
   </properties>
 
   <dependencyManagement>
@@ -97,6 +98,14 @@
       <version>${jwt-java.version}</version>
     </dependency>
 
+    <!-- Mock -->
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock-jetty12</artifactId>
+      <version>${wiremock.version}</version>
+      <scope>test</scope>
+    </dependency>
+
     <!--Code generation-->
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -140,6 +149,7 @@
         <configuration>
           <argLine>
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+            --add-exports=java.base/sun.security.x509=ALL-UNNAMED
           </argLine>
         </configuration>
         <dependencies>

@@ -1,16 +1,19 @@
 package com.donesvad.rest.service;
 
-import static com.donesvad.rest.enums.ResponseFormat.JSON;
+import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 
 import com.donesvad.rest.dto.GetCarManufacturersResponse;
 import com.donesvad.rest.dto.GetMakesOfCarsResponse;
-import io.qameta.allure.restassured.AllureRestAssured;
+import com.donesvad.rest.enums.ResponseFormat;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.config.ParamConfig;
+import io.restassured.config.ParamConfig.UpdateStrategy;
 import io.restassured.filter.log.LogDetail;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import jakarta.annotation.PostConstruct;
-import java.util.HashMap;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,9 +21,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CarsService {
 
-  private static final String getAllMakesPath = "/getallmakes";
-  private static final String getAllManufacturers = "/getallmanufacturers";
-  private static final String formatParam = "format=%s";
+  public static final String getAllMakesPath = "/getallmakes";
+  public static final String getAllManufacturers = "/getallmanufacturers";
+  public static final String formatParam = "format";
+
   private RequestSpecification requestSpec;
 
   @Value("${cars-service-rest.host}")
@@ -32,32 +36,38 @@ public class CarsService {
   @Value("${cars-service-rest.protocol}")
   private String protocol;
 
-  @Value("${cars-service-rest.context-path}")
-  private String contextPath;
+  @Value("${cars-service-rest.base-path}")
+  private String basePath;
 
   @PostConstruct
   public void init() {
-    HashMap<String, String> headers = new HashMap<>();
-    headers.put("Content-Type", "application/json");
-    headers.put("Accept", "application/json");
     String baseUri = protocol + "://" + host;
     if (port != null) {
       baseUri += ":" + port;
     }
     requestSpec =
         new RequestSpecBuilder()
-            .setBaseUri(baseUri)
             .log(LogDetail.URI)
             .log(LogDetail.METHOD)
             .log(LogDetail.BODY)
-            .addHeaders(headers)
-            .addFilter(new AllureRestAssured())
+            .setContentType(ContentType.JSON)
+            .setAccept(ContentType.JSON)
+            .setBaseUri(baseUri)
+            .setBasePath(basePath)
+            .setConfig(
+                config()
+                    .paramConfig(
+                        ParamConfig.paramConfig()
+                            .queryParamsUpdateStrategy(UpdateStrategy.REPLACE)))
             .build();
   }
 
-  public GetMakesOfCarsResponse getMakesOfCars() {
-    return given(requestSpec)
-        .get(contextPath + getAllMakesPath + "?" + String.format(formatParam, JSON))
+  public Response getMakesOfCarsResponse(ResponseFormat format) {
+    return given(requestSpec).queryParam(formatParam, format).get(getAllMakesPath);
+  }
+
+  public GetMakesOfCarsResponse getMakesOfCars(ResponseFormat format) {
+    return getMakesOfCarsResponse(format)
         .then()
         .statusCode(HttpStatus.SC_OK)
         .extract()
@@ -65,9 +75,12 @@ public class CarsService {
         .as(GetMakesOfCarsResponse.class);
   }
 
-  public GetCarManufacturersResponse getCarManufacturers() {
-    return given(requestSpec)
-        .get(contextPath + getAllManufacturers + "?" + String.format(formatParam, JSON))
+  public Response getCarManufacturersResponse(ResponseFormat format) {
+    return given(requestSpec.queryParam(formatParam, format)).get(getAllManufacturers);
+  }
+
+  public GetCarManufacturersResponse getCarManufacturers(ResponseFormat format) {
+    return getCarManufacturersResponse(format)
         .then()
         .statusCode(HttpStatus.SC_OK)
         .extract()
