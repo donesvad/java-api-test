@@ -1,0 +1,6 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Sep 03 13:33:00 GMT 2024","Tue Sep 03 13:33:01 GMT 2024","576","","com.donesvad.scenario.CarsTest","","com.donesvad.scenario.CarsTest","getMakesOfCarsResponseTest","getMakesOfCarsResponseTest()",""
+"passed","Tue Sep 03 13:32:59 GMT 2024","Tue Sep 03 13:33:00 GMT 2024","769","","com.donesvad.scenario.CarsTest","","com.donesvad.scenario.CarsTest","getSpecificMakeOfCarsTest","getSpecificMakeOfCarsTest()",""
+"passed","Tue Sep 03 13:32:55 GMT 2024","Tue Sep 03 13:32:59 GMT 2024","3637","","com.donesvad.scenario.CarsTest","","com.donesvad.scenario.CarsTest","getSpecificCarManufacturerTest","getSpecificCarManufacturerTest()",""
+"passed","Tue Sep 03 13:32:59 GMT 2024","Tue Sep 03 13:32:59 GMT 2024","505","","com.donesvad.scenario.CarsTest","","com.donesvad.scenario.CarsTest","getCarsManufacturersResponseTest","getCarsManufacturersResponseTest()",""
+"passed","Tue Sep 03 13:33:00 GMT 2024","Tue Sep 03 13:33:00 GMT 2024","161","","com.donesvad.scenario.CarsTest","","com.donesvad.scenario.CarsTest","getMakesOfCarsYamlResponseTest","getMakesOfCarsYamlResponseTest()",""
