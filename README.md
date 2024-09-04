@@ -128,3 +128,60 @@ WireMock allows you to:
 - Define stubs for external service endpoints, returning pre-defined responses for various HTTP methods.
 - Simulate different response statuses and delays to test how your application handles various scenarios.
 - Ensure that your tests are fast, reliable, and do not depend on external network conditions.
+
+### Test Parallelization
+
+To improve the efficiency and speed of the test execution, especially when dealing with a large number of test scenarios, this framework supports parallel
+execution using both **thread-based** (JUnit 5) and **fork-based** (Maven Surefire plugin) parallelization strategies.
+
+#### 1. Thread-Based Parallelization with JUnit 5
+
+JUnit 5 natively supports parallel execution of tests using its configuration settings. You can run test methods or test classes concurrently, which helps speed
+up the test suite execution.
+
+**Configuration**
+To enable thread-based parallelization with JUnit 5, you need to add the following configuration to your junit-platform.properties file, located in the
+`src/test/resources` directory:
+
+```properties
+# junit-platform.properties
+junit.jupiter.execution.parallel.enabled=true
+junit.jupiter.execution.parallel.mode.default=concurrent
+junit.jupiter.execution.parallel.config.strategy=dynamic
+junit.jupiter.execution.parallel.config.dynamic.factor=2
+```
+
+In this configuration:
+
+- **junit.jupiter.execution.parallel.enabled**: Enables parallel execution.
+- **junit.jupiter.execution.parallel.mode.default**: Sets the default parallel execution mode. Use concurrent to run test classes and methods in parallel.
+- **junit.jupiter.execution.parallel.config.strategy**: Defines the parallel execution strategy. Options include fixed or dynamic.
+- **junit.jupiter.execution.parallel.config.dynamic.factor**: For dynamic strategy, this factor is multiplied by the number of available processors to determine
+  the maximum number of threads to use. For example, if you have 4 CPUs and a factor of 2, JUnit will use up to 8 threads.
+
+#### 2. Fork-Based Parallelization with Maven Surefire Plugin
+
+Fork-based parallelization runs multiple instances of the JVM, each executing a portion of the test suite. This method is more resource-intensive but provides a
+higher degree of isolation between test cases, making it suitable for tests that have significant memory or CPU demands.
+
+**Configuration**
+To enable fork-based parallelization in Maven, update the surefire plugin configuration in your `pom.xml` file:
+
+```xml
+<configuration>
+  <forkCount>2</forkCount>
+  <reuseForks>true</reuseForks>
+</configuration>
+```
+
+In this configuration:
+
+- **forkCount**: Specifies the number of JVM instances to run in parallel. You can use a fixed number (e.g., 2) or a dynamic value based on available CPUs.
+- **reuseForks**: When set to true, Maven reuses the JVM instances for subsequent tests, reducing the overhead of JVM startup time.
+
+By combining both thread-based and fork-based parallelization strategies, you can optimize test execution time and resource utilization for your test suite.
+
+### Automatic Retry of Failing Tests
+
+To handle flaky tests or tests that intermittently fail due to non-deterministic issues (such as network timeouts or temporary service unavailability), this
+framework supports automatic retries of failing tests using the `rerunFailingTestsCount` feature of the Maven Surefire and Failsafe plugins.
