@@ -153,6 +153,7 @@
           </argLine>
           <forkCount>2</forkCount>
           <reuseForks>true</reuseForks>
+          <rerunFailingTestsCount>2</rerunFailingTestsCount> <!-- Number of times to rerun failed tests -->
         </configuration>
         <dependencies>
           <dependency>
