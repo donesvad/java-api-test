@@ -151,6 +151,8 @@
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
             --add-exports=java.base/sun.security.x509=ALL-UNNAMED
           </argLine>
+          <forkCount>2</forkCount>
+          <reuseForks>true</reuseForks>
         </configuration>
         <dependencies>
           <dependency>
