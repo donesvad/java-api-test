@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"64aeb23bf9659be08206de5c24f49c59","name":"com.donesvad.scenario.MakesOfCarsTest","statistic":{"failed":0,"broken":0,"skipped":0,"passed":4,"unknown":0,"total":4}},{"uid":"bcbfc79d6e885709d55738d6f17ea3c4","name":"com.donesvad.scenario.CarManufacturerTest","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}}]}
