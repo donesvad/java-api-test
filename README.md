@@ -25,7 +25,7 @@ comprehensive testing capabilities for RESTful APIs and gRPC services.
 
 ### Prerequisites
 
-- **Java 11** or higher
+- **Java 17** or higher
 - **Maven** (version 3.6.0 or higher)
 - **Allure CLI** (for generating and viewing reports)
 
