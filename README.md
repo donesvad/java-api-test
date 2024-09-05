@@ -20,6 +20,9 @@ comprehensive testing capabilities for RESTful APIs and gRPC services.
   triggers on push, pull request, or manually, ensuring that the code is always in a deployable state.
 - **WireMock for Mocking**: Utilizes WireMock for mocking external HTTP dependencies, allowing for isolated and repeatable tests by simulating the behavior of
   an external API without relying on its availability.
+- **Test Parallelization**: Supports both thread-based and fork-based parallelization strategies to speed up test execution.
+- **Automatic Retry of Failing Tests**: Automatically retries failing tests to handle flaky tests or transient failures.
+- **Docker Support**: Provides Docker support for running tests in a containerized environment, ensuring consistent test execution across different machines.
 
 ## Getting Started
 
@@ -28,6 +31,7 @@ comprehensive testing capabilities for RESTful APIs and gRPC services.
 - **Java 17** or higher
 - **Maven** (version 3.6.0 or higher)
 - **Allure CLI** (for generating and viewing reports)
+- **Docker** (optional, for running tests in a containerized environment)
 
 ### Build and Run Tests
 
@@ -185,3 +189,9 @@ By combining both thread-based and fork-based parallelization strategies, you ca
 
 To handle flaky tests or tests that intermittently fail due to non-deterministic issues (such as network timeouts or temporary service unavailability), this
 framework supports automatic retries of failing tests using the `rerunFailingTestsCount` feature of the Maven Surefire and Failsafe plugins.
+
+### Docker Support
+
+To simplify the setup process and ensure a consistent environment across different machines, this project supports running the E2E API test framework inside a
+Docker container. Docker allows you to package the framework along with all its dependencies, making it easier to run tests without worrying about local
+environment configurations.
